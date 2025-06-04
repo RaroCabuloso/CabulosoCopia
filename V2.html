@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clonador de Sites (Frontend Puro)</title>
+<style>
+  :root {
+    --primary: #4f46e5;
+    --secondary: #3b82f6;
+    --background: #f9fafb;
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --success: #10b981;
+    --error: #ef4444;
+    --border-radius: 8px;
+    --transition: 0.3s ease;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin:0; 
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    padding: 1.5rem;
+    color: white;
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: 700;
+    user-select: none;
+    box-shadow: 0 4px 12px rgb(79 70 229 / 0.5);
+  }
+  main {
+    flex: 1;
+    max-width: 900px;
+    margin: 2rem auto;
+    width: 90%;
+  }
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  input[type="url"] {
+    flex: 1 1 auto;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    border: 2px solid var(--primary);
+    border-radius: var(--border-radius);
+    transition: border-color var(--transition);
+  }
+  input[type="url"]:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 8px var(--secondary);
+  }
+  button {
+    background-color: var(--primary);
+    border: none;
+    color: white;
+    padding: 0 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition);
+  }
+  button:disabled {
+    background-color: #b3aef9;
+    cursor: not-allowed;
+  }
+  button:hover:not(:disabled) {
+    background-color: var(--secondary);
+  }
+  #feedback {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    min-height: 28px;
+    color: var(--success);
+    user-select: none;
+  }
+  #feedback.error {
+    color: var(--error);
+  }
+  #previewContainer {
+    margin-top: 1.5rem;
+    border: 2px solid var(--primary);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    height: 500px;
+  }
+  iframe#preview {
+    border: none;
+    width: 100%;
+    height: 100%;
+    background: white;
+  }
+  @media (max-width: 600px) {
+    form {
+      flex-direction: column;
+    }
+    button {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+<header>Clonador de Sites (Frontend Puro)</header>
+<main>
+  <form id="cloneForm" novalidate autocomplete="off">
+    <input 
+      type="url" 
+      id="urlInput" 
+      placeholder="https://exemplo.com" 
+      aria-label="Insira a URL do site a ser clonado" 
+      required 
+      pattern="https?://.+"
+    />
+    <button type="submit" id="cloneButton">Clonar Site</button>
+    <button type="button" id="copyButton" disabled>Copiar HTML</button>
+  </form>
+  <div id="feedback" aria-live="polite"></div>
+  <div id="previewContainer" hidden>
+    <iframe id="preview" sandbox="allow-same-origin allow-scripts"></iframe>
+  </div>
+</main>
+<script>
+  (() => {
+    const form = document.getElementById('cloneForm');
+    const urlInput = document.getElementById('urlInput');
+    const cloneButton = document.getElementById('cloneButton');
+    const copyButton = document.getElementById('copyButton');
+    const feedback = document.getElementById('feedback');
+    const previewContainer = document.getElementById('previewContainer');
+    const preview = document.getElementById('preview');
+    let clonedHTML = '';
+
+    // Limitação simples de taxa: só pode fazer 1 requisição a cada 10s
+    let lastFetchTimestamp = 0;
+    const RATE_LIMIT_MS = 10000;
+
+    function validateUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === 'http:' || url.protocol === 'https:';
+      } catch {
+        return false;
+      }
+    }
+
+    function setFeedback(message, isError = false) {
+      feedback.textContent = message;
+      feedback.classList.toggle('error', isError);
+    }
+
+    async function fetchSiteHtml(url) {
+      // Usar fetch para buscar o HTML.
+      // Problema: CORS. Muitos sites bloqueiam requisições de outros origens
+      // Não conseguimos contornar no frontend, exceto usando servidores proxy, que não é permitido aqui.
+
+      setFeedback('Carregando o site...', false);
+      cloneButton.disabled = true;
+      copyButton.disabled = true;
+
+      try {
+        // Adicionando no cabeçalho para tentar evitar bloqueios, mas provavelmente não será suficiente
+        const response = await fetch(url, {
+          mode: 'cors',
+          headers: {
+            'Accept': 'text/html',
+            'User-Agent': 'Mozilla/5.0 (ClonadorDeSitesFrontend)'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} - ${response.statusText}`);
+        }
+
+        // O conteúdo esperado é texto HTML
+        const html = await response.text();
+        return html;
+
+      } catch (err) {
+        throw err;
+      } finally {
+        cloneButton.disabled = false;
+      }
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      setFeedback('');
+      previewContainer.hidden = true;
+      preview.srcdoc = '';
+      clonedHTML = '';
+      copyButton.disabled = true;
+
+      const url = urlInput.value.trim();
+
+      if (!validateUrl(url)) {
+        setFeedback('URL inválida. Por favor, insira uma URL completa começando com http:// ou https://', true);
+        return;
+      }
+
+      const now = Date.now();
+      if (now - lastFetchTimestamp < RATE_LIMIT_MS) {
+        setFeedback(`Aguarde ${Math.ceil((RATE_LIMIT_MS - (now - lastFetchTimestamp))/1000)} segundos entre as tentativas.`, true);
+        return;
+      }
+      lastFetchTimestamp = now;
+
+      try {
+        const html = await fetchSiteHtml(url);
+
+        clonedHTML = html;
+        // Mostrar dentro do iframe via srcdoc (sandbox para segurança)
+        preview.srcdoc = clonedHTML;
+        previewContainer.hidden = false;
+        setFeedback('Site clonado com sucesso! Use o botão "Copiar HTML" para copiar o código.');
+
+        copyButton.disabled = false;
+
+      } catch (error) {
+        setFeedback(`Erro ao carregar o site: ${error.message}`, true);
+      }
+    });
+
+    copyButton.addEventListener('click', () => {
+      if (!clonedHTML) return;
+      navigator.clipboard.writeText(clonedHTML).then(() => {
+        setFeedback('HTML copiado para a área de transferência com sucesso!');
+      }).catch(() => {
+        setFeedback('Falha ao copiar o HTML. Tente manualmente.', true);
+      });
+    });
+
+  })();
+</script>
+</body>
+</html>
+
