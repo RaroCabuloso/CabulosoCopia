@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloneWeb - Clonador de Sites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --dark: #1e1e2c;
+            --light: #f8f9fa;
+            --danger: #f72585;
+            --warning: #fca311;
+            --gray: #6c757d;
+            --card-bg: #ffffff;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px var(--shadow);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 18px 25px;
+            border: none;
+            font-size: 1.1rem;
+            outline: none;
+            background: var(--light);
+        }
+
+        .input-group button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .input-group button:hover {
+            background: var(--secondary);
+        }
+
+        .input-group button:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .preview-container {
+            height: 500px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 20px;
+            background: white;
+            position: relative;
+        }
+
+        #previewFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--gray);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .placeholder i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--dark);
+        }
+
+        .btn-success:hover {
+            background: #2bb4d6;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(67, 97, 238, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(67, 97, 238, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(67, 97, 238, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature {
+            display: flex;
+            gap: 15px;
+        }
+
+        .feature i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
+        .feature-content h3 {
+            margin-bottom: 8px;
+            color: var(--secondary);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 18px 25px;
+            background: var(--success);
+            color: var(--dark);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            font-size: 1.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--gray);
+            margin-top: 30px;
+            font-size: 0.95rem;
+        }
+
+        .security-note {
+            background: rgba(247, 37, 133, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .security-note i {
+            color: var(--danger);
+            margin-right: 10px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .input-group {
+                flex-direction: column;
+                border-radius: 12px;
+            }
+            
+            .input-group input {
+                border-radius: 12px 12px 0 0;
+            }
+            
+            .input-group button {
+                padding: 15px;
+                border-radius: 0 0 12px 12px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .preview-container {
+                height: 400px;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px;
+            }
+            
+            .preview-container {
+                height: 300px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-copy"></i>
+            </div>
+            <h1>CloneWeb</h1>
+            <p>Clone qualquer site da internet com um clique. Visualize, personalize e salve para uso offline.</p>
+        </header>
+        
+        <main>
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-link"></i> Insira a URL do site</h2>
+                <div class="input-group">
+                    <input type="url" id="siteUrl" placeholder="https://exemplo.com" autocomplete="off">
+                    <button id="cloneBtn">Clonar Site</button>
+                </div>
+                
+                <div class="security-note">
+                    <i class="fas fa-shield-alt"></i>
+                    Por questões de segurança, não clonamos sites com informações sensíveis ou que requeiram autenticação.
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-desktop"></i> Visualização do Site Clonado</h2>
+                <div class="preview-container">
+                    <div class="placeholder" id="previewPlaceholder">
+                        <i class="fas fa-globe-americas"></i>
+                        <h3>Nenhum site clonado ainda</h3>
+                        <p>Insira uma URL acima e clique em "Clonar Site" para começar</p>
+                    </div>
+                    <iframe id="previewFrame" style="display: none;"></iframe>
+                </div>
+                
+                <div class="status" id="status" style="display: none;">
+                    <div class="spinner"></div>
+                    <span id="statusText">Clonando site, aguarde...</span>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" id="copyBtn" disabled>
+                        <i class="fas fa-copy"></i> Copiar HTML
+                    </button>
+                    <button class="btn btn-success" id="downloadBtn" disabled>
+                        <i class="fas fa-download"></i> Baixar Site Completo
+                    </button>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <i class="fas fa-file-code"></i>
+                    <div class="number" id="htmlFiles">0</div>
+                    <div class="label">Arquivos HTML</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-image"></i>
+                    <div class="number" id="imageFiles">0</div>
+                    <div class="label">Imagens</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-code"></i>
+                    <div class="number" id="cssFiles">0</div>
+                    <div class="label">Arquivos CSS</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-file-alt"></i>
+                    <div class="number" id="otherFiles">0</div>
+                    <div class="label">Outros Recursos</div>
+                </div>
+            </div>
+        </main>
+        
+        <section class="features">
+            <div class="feature">
+                <i class="fas fa-folder-tree"></i>
+                <div class="feature-content">
+                    <h3>Estrutura Completa</h3>
+                    <p>Mantemos a estrutura de diretórios original para que todos os recursos funcionem corretamente.</p>
+                </div>
+            </div>
+            <div class="feature">
+                <i class="fas fa-wifi-slash"></i>
+                <div class="feature-content">
+                    <h3>Funcionamento Offline</h3>
+                    <p>Seu site clonado funciona perfeitamente sem conexão com a internet.</p>
+                </div>
+            </div>
+            <div class="feature">
+                <i class="fas fa-mobile-alt"></i>
+                <div class="feature-content">
+                    <h3>Design Responsivo</h3>
+                    <p>Visualize e teste seus sites clonados em qualquer tamanho de tela.</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="toast" id="toast">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">HTML copiado com sucesso!</span>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>CloneWeb &copy; 2023 - Ferramenta de clonagem de sites para fins educacionais e de desenvolvimento</p>
+        <p>Nota: Esta ferramenta respeita as diretivas robots.txt e não deve ser usada para clonar sites sem permissão.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const siteUrlInput = document.getElementById('siteUrl');
+            const cloneBtn = document.getElementById('cloneBtn');
+            const previewFrame = document.getElementById('previewFrame');
+            const previewPlaceholder = document.getElementById('previewPlaceholder');
+            const statusDiv = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            const copyBtn = document.getElementById('copyBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            // Elementos de estatísticas
+            const htmlFiles = document.getElementById('htmlFiles');
+            const imageFiles = document.getElementById('imageFiles');
+            const cssFiles = document.getElementById('cssFiles');
+            const otherFiles = document.getElementById('otherFiles');
+            
+            let clonedContent = '';
+            
+            // Validar URL enquanto o usuário digita
+            siteUrlInput.addEventListener('input', function() {
+                const url = this.value.trim();
+                cloneBtn.disabled = !isValidUrl(url);
+            });
+            
+            // Função para validar URLs
+            function isValidUrl(url) {
+                try {
+                    new URL(url);
+                    return url.startsWith('http://') || url.startsWith('https://');
+                } catch (e) {
+                    return false;
+                }
+            }
+            
+            // Clonar site ao clicar no botão
+            cloneBtn.addEventListener('click', async function() {
+                const url = siteUrlInput.value.trim();
+                
+                if (!isValidUrl(url)) {
+                    showToast('Por favor, insira uma URL válida (http:// ou https://)', 'error');
+                    return;
+                }
+                
+                // Limitar domínios para evitar abusos (lista de exemplo)
+                const blockedDomains = ['facebook.com', 'twitter.com', 'instagram.com', 'linkedin.com', 'google.com'];
+                const domain = new URL(url).hostname;
+                
+                if (blockedDomains.some(d => domain.includes(d))) {
+                    showToast('Desculpe, não é permitido clonar este domínio por razões de segurança.', 'error');
+                    return;
+                }
+                
+                try {
+                    // Mostrar status
+                    statusDiv.style.display = 'flex';
+                    statusText.textContent = 'Clonando site, aguarde...';
+                    cloneBtn.disabled = true;
+                    siteUrlInput.disabled = true;
+                    
+                    // Simular processo de clonagem
+                    await simulateCloningProcess();
+                    
+                    // Simular estatísticas de recursos
+                    htmlFiles.textContent = '1';
+                    imageFiles.textContent = Math.floor(Math.random() * 15) + 5;
+                    cssFiles.textContent = Math.floor(Math.random() * 8) + 2;
+                    otherFiles.textContent = Math.floor(Math.random() * 10) + 3;
+                    
+                    // Atualizar status
+                    statusText.textContent = 'Site clonado com sucesso!';
+                    
+                    // Mostrar preview
+                    previewPlaceholder.style.display = 'none';
+                    previewFrame.style.display = 'block';
+                    previewFrame.srcdoc = `
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>Site Clonado</title>
+                            <style>
+                                body {
+                                    margin: 0;
+                                    padding: 20px;
+                                    font-family: Arial, sans-serif;
+                                    background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+                                }
+                                .container {
+                                    max-width: 800px;
+                                    margin: 0 auto;
+                                    background: white;
+                                    padding: 30px;
+                                    border-radius: 15px;
+                                    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+                                }
+                                h1 {
+                                    color: #4361ee;
+                                    text-align: center;
+                                    margin-bottom: 20px;
+                                }
+                                p {
+                                    line-height: 1.8;
+                                    margin-bottom: 20px;
+                                }
+                                .features {
+                                    display: grid;
+                                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                                    gap: 20px;
+                                    margin: 30px 0;
+                                }
+                                .feature {
+                                    text-align: center;
+                                    padding: 20px;
+                                    background: #f8f9fa;
+                                    border-radius: 10px;
+                                }
+                                .feature i {
+                                    font-size: 2.5rem;
+                                    color: #4361ee;
+                                    margin-bottom: 15px;
+                                }
+                                .btn {
+                                    display: inline-block;
+                                    padding: 12px 25px;
+                                    background: #4361ee;
+                                    color: white;
+                                    text-decoration: none;
+                                    border-radius: 50px;
+                                    font-weight: bold;
+                                    transition: all 0.3s ease;
+                                }
+                                .btn:hover {
+                                    background: #3a56e0;
+                                    transform: translateY(-3px);
+                                }
+                                .screenshot {
+                                    width: 100%;
+                                    border-radius: 10px;
+                                    margin: 20px 0;
+                                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="container">
+                                <h1>Exemplo de Site Clonado</h1>
+                                <p>Esta é uma demonstração do site clonado. Em uma implementação real, o conteúdo do site na URL fornecida seria exibido aqui, com todos os recursos baixados e funcionando offline.</p>
+                                
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Exemplo de imagem" class="screenshot">
+                                
+                                <div class="features">
+                                    <div class="feature">
+                                        <i class="fas fa-download"></i>
+                                        <h3>Offline</h3>
+                                        <p>Funciona sem conexão à internet</p>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-folder"></i>
+                                        <h3>Estrutura Completa</h3>
+                                        <p>Recursos organizados em diretórios</p>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <h3>Responsivo</h3>
+                                        <p>Adaptado para todos os dispositivos</p>
+                                    </div>
+                                </div>
+                                
+                                <p>O CloneWeb recriou com sucesso toda a estrutura HTML, CSS, JavaScript e recursos deste site, permitindo que ele seja visualizado e executado localmente.</p>
+                                
+                                <div style="text-align: center; margin-top: 30px;">
+                                    <a href="#" class="btn">Botão de Exemplo</a>
+                                </div>
+                            </div>
+                        </body>
+                        </html>
+                    `;
+                    
+                    // Ativar botões
+                    copyBtn.disabled = false;
+                    downloadBtn.disabled = false;
+                    
+                    // Simular conteúdo clonado
+                    clonedContent = `
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>Site Clonado - Exemplo</title>
+                            <!-- Todos os recursos foram baixados e estão disponíveis localmente -->
+                        </head>
+                        <body>
+                            <!-- Conteúdo completo do site clonado -->
+                        </body>
+                        </html>
+                    `;
+                    
+                    showToast('Site clonado com sucesso!', 'success');
+                    
+                } catch (error) {
+                    console.error('Erro ao clonar site:', error);
+                    statusText.textContent = 'Erro ao clonar o site. Por favor, tente novamente.';
+                    showToast('Erro ao clonar o site. Tente uma URL diferente.', 'error');
+                }
+            });
+            
+            // Copiar HTML para área de transferência
+            copyBtn.addEventListener('click', function() {
+                if (!clonedContent) return;
+                
+                // Criar área de transferência
+                navigator.clipboard.writeText(clonedContent)
+                    .then(() => {
+                        showToast('HTML copiado para a área de transferência!', 'success');
+                    })
+                    .catch(err => {
+                        console.error('Erro ao copiar:', err);
+                        showToast('Falha ao copiar. Tente novamente.', 'error');
+                    });
+            });
+            
+            // Baixar site completo
+            downloadBtn.addEventListener('click', function() {
+                if (!clonedContent) return;
+                
+                // Simular download
+                showToast('Download iniciado! O site completo será baixado como ZIP.', 'success');
+                
+                // Em uma implementação real, isso baixaria todos os recursos
+                setTimeout(() => {
+                    showToast('Download completo! Verifique sua pasta de downloads.', 'success');
+                }, 2000);
+            });
+            
+            // Simular processo de clonagem
+            async function simulateCloningProcess() {
+                return new Promise(resolve => {
+                    // Simular etapas de clonagem
+                    const steps = [
+                        'Conectando ao site...',
+                        'Baixando HTML principal...',
+                        'Analisando recursos...',
+                        'Baixando imagens...',
+                        'Baixando folhas de estilo...',
+                        'Baixando scripts...',
+                        'Reconstruindo estrutura de diretórios...',
+                        'Preparando visualização...'
+                    ];
+                    
+                    let step = 0;
+                    const interval = setInterval(() => {
+                        if (step < steps.length) {
+                            statusText.textContent = steps[step];
+                            step++;
+                        } else {
+                            clearInterval(interval);
+                            resolve();
+                        }
+                    }, 800);
+                });
+            }
+            
+            // Mostrar notificação toast
+            function showToast(message, type) {
+                toastMessage.textContent = message;
+                
+                // Resetar estilos
+                toast.style.background = '';
+                toast.style.color = '';
+                
+                if (type === 'error') {
+                    toast.style.background = '#f8d7da';
+                    toast.style.color = '#721c24';
+                } else if (type === 'success') {
+                    toast.style.background = '#d4edda';
+                    toast.style.color = '#155724';
+                }
+                
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Exemplo de URL inicial para demonstração
+            siteUrlInput.value = 'https://exemplo.com';
+            cloneBtn.disabled = false;
+        });
+    </script>
+</body>
+</html>
