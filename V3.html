@@ -3,36 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCC and Cabuloso 🌛 Copiando Geral - Clonador de Sites</title>
+    <title>TCC and Cabuloso 🌛 Hacker Cloner</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --success: #4cc9f0;
-            --dark: #1e1e2c;
-            --light: #f8f9fa;
-            --danger: #f72585;
-            --warning: #fca311;
-            --gray: #6c757d;
-            --card-bg: #ffffff;
-            --border: #e0e0e0;
-            --shadow: rgba(0, 0, 0, 0.1);
+            --primary: #00ff41;
+            --secondary: #008f11;
+            --success: #00ff41;
+            --dark: #0d0208;
+            --light: #003b00;
+            --danger: #ff0038;
+            --warning: #ffae00;
+            --gray: #007f00;
+            --card-bg: rgba(0, 15, 0, 0.8);
+            --border: #00ff41;
+            --shadow: rgba(0, 255, 65, 0.2);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier New', monospace;
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            color: var(--dark);
+            background-color: var(--dark);
+            color: var(--primary);
             line-height: 1.6;
             min-height: 100vh;
             padding: 20px;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow-x: hidden;
         }
 
         .container {
@@ -45,13 +50,28 @@
             text-align: center;
             padding: 30px 0;
             margin-bottom: 30px;
+            border-bottom: 1px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
         header h1 {
             font-size: 2.8rem;
             margin-bottom: 10px;
             color: var(--primary);
-            text-shadow: 2px 2px 4px var(--shadow);
+            text-shadow: 0 0 10px var(--shadow);
+            letter-spacing: 2px;
+            font-weight: normal;
         }
 
         header p {
@@ -59,6 +79,7 @@
             color: var(--gray);
             max-width: 700px;
             margin: 0 auto;
+            letter-spacing: 1px;
         }
 
         .logo {
@@ -69,77 +90,115 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { text-shadow: 0 0 5px var(--primary); }
+            50% { text-shadow: 0 0 20px var(--primary); }
+            100% { text-shadow: 0 0 5px var(--primary); }
         }
 
         .card {
             background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px var(--shadow);
+            border-radius: 0;
+            border: 1px solid var(--border);
+            box-shadow: 0 0 15px var(--shadow);
             padding: 30px;
             margin-bottom: 30px;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            box-shadow: 0 0 25px var(--shadow);
         }
 
         .card-title {
             font-size: 1.5rem;
             margin-bottom: 20px;
-            color: var(--secondary);
+            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 10px;
+            font-weight: normal;
+            letter-spacing: 1px;
         }
 
         .input-group {
             display: flex;
             margin-bottom: 20px;
-            border-radius: 50px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .input-group::after {
+            content: ">";
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
         }
 
         .input-group input {
             flex: 1;
-            padding: 18px 25px;
+            padding: 18px 25px 18px 35px;
             border: none;
             font-size: 1.1rem;
             outline: none;
-            background: var(--light);
+            background: transparent;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .input-group input::placeholder {
+            color: var(--gray);
         }
 
         .input-group button {
-            background: var(--primary);
-            color: white;
+            background: var(--dark);
+            color: var(--primary);
             border: none;
+            border-left: 1px solid var(--border);
             padding: 0 30px;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: normal;
             cursor: pointer;
             transition: all 0.3s ease;
+            letter-spacing: 1px;
         }
 
         .input-group button:hover {
-            background: var(--secondary);
+            background: var(--light);
+            text-shadow: 0 0 5px var(--primary);
         }
 
         .input-group button:disabled {
-            background: var(--gray);
+            background: var(--dark);
+            color: var(--gray);
             cursor: not-allowed;
+            text-shadow: none;
         }
 
         .preview-container {
             height: 500px;
             border: 1px solid var(--border);
-            border-radius: 12px;
             overflow: hidden;
             margin-top: 20px;
-            background: white;
+            background: black;
             position: relative;
         }
 
@@ -158,13 +217,13 @@
             color: var(--gray);
             text-align: center;
             padding: 20px;
+            border: 1px dashed var(--border);
         }
 
         .placeholder i {
             font-size: 5rem;
             margin-bottom: 20px;
-            color: var(--primary);
-            opacity: 0.3;
+            color: var(--gray);
         }
 
         .controls {
@@ -175,44 +234,67 @@
 
         .btn {
             padding: 14px 28px;
-            border-radius: 50px;
-            border: none;
+            border-radius: 0;
+            border: 1px solid var(--border);
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: normal;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 10px;
+            background: transparent;
+            color: var(--primary);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: var(--primary);
-            color: white;
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .btn-primary:hover {
-            background: var(--secondary);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 10px var(--shadow);
         }
 
         .btn-success {
-            background: var(--success);
-            color: var(--dark);
+            border-color: var(--success);
+            color: var(--success);
         }
 
         .btn-success:hover {
-            background: #2bb4d6;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
         }
 
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
             box-shadow: none;
+            border-color: var(--gray);
+            color: var(--gray);
+        }
+
+        .btn:disabled:hover::before {
+            left: -100%;
         }
 
         .status {
@@ -221,15 +303,16 @@
             gap: 10px;
             margin-top: 20px;
             padding: 15px;
-            border-radius: 12px;
-            background: rgba(67, 97, 238, 0.1);
+            border: 1px solid var(--border);
             font-size: 0.95rem;
+            background: rgba(0, 15, 0, 0.5);
+            letter-spacing: 1px;
         }
 
         .spinner {
             width: 24px;
             height: 24px;
-            border: 3px solid rgba(67, 97, 238, 0.3);
+            border: 3px solid rgba(0, 255, 65, 0.3);
             border-radius: 50%;
             border-top-color: var(--primary);
             animation: spin 1s linear infinite;
@@ -247,28 +330,43 @@
         }
 
         .stat-card {
-            background: rgba(67, 97, 238, 0.08);
-            border-radius: 12px;
+            background: rgba(0, 15, 0, 0.5);
+            border: 1px solid var(--border);
             padding: 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.05), transparent);
         }
 
         .stat-card i {
             font-size: 2.5rem;
             color: var(--primary);
             margin-bottom: 15px;
+            text-shadow: 0 0 5px var(--shadow);
         }
 
         .stat-card .number {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: normal;
             color: var(--primary);
             margin-bottom: 5px;
+            text-shadow: 0 0 5px var(--shadow);
         }
 
         .stat-card .label {
             color: var(--gray);
             font-size: 0.95rem;
+            letter-spacing: 1px;
         }
 
         .features {
@@ -281,17 +379,33 @@
         .feature {
             display: flex;
             gap: 15px;
+            border: 1px solid var(--border);
+            padding: 20px;
+            background: rgba(0, 15, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            box-shadow: 0 0 15px var(--shadow);
         }
 
         .feature i {
             font-size: 1.8rem;
             color: var(--primary);
             margin-top: 5px;
+            text-shadow: 0 0 5px var(--shadow);
         }
 
         .feature-content h3 {
             margin-bottom: 8px;
-            color: var(--secondary);
+            color: var(--primary);
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        .feature-content p {
+            color: var(--gray);
+            letter-spacing: 0.5px;
         }
 
         .toast {
@@ -299,10 +413,10 @@
             bottom: 30px;
             right: 30px;
             padding: 18px 25px;
-            background: var(--success);
-            color: var(--dark);
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            background: rgba(0, 15, 0, 0.9);
+            color: var(--primary);
+            border: 1px solid var(--border);
+            box-shadow: 0 0 15px var(--shadow);
             display: flex;
             align-items: center;
             gap: 15px;
@@ -310,6 +424,7 @@
             opacity: 0;
             transition: all 0.4s ease;
             z-index: 1000;
+            letter-spacing: 1px;
         }
 
         .toast.show {
@@ -327,15 +442,18 @@
             color: var(--gray);
             margin-top: 30px;
             font-size: 0.95rem;
+            border-top: 1px solid var(--border);
+            letter-spacing: 1px;
         }
 
         .security-note {
-            background: rgba(247, 37, 133, 0.1);
-            border-radius: 12px;
+            background: rgba(255, 0, 56, 0.1);
+            border: 1px solid var(--danger);
             padding: 15px;
             margin-top: 20px;
             font-size: 0.9rem;
-            color: var(--dark);
+            color: var(--danger);
+            letter-spacing: 0.5px;
         }
 
         .security-note i {
@@ -343,20 +461,32 @@
             margin-right: 10px;
         }
 
+        /* Efeitos de terminal */
+        .typing-effect {
+            border-right: 2px solid var(--primary);
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary); }
+        }
+
         /* Responsividade */
         @media (max-width: 768px) {
             .input-group {
                 flex-direction: column;
-                border-radius: 12px;
             }
             
             .input-group input {
-                border-radius: 12px 12px 0 0;
+                border-radius: 0;
             }
             
             .input-group button {
                 padding: 15px;
-                border-radius: 0 0 12px 12px;
+                border-radius: 0;
+                border-left: none;
+                border-top: 1px solid var(--border);
             }
             
             .controls {
@@ -394,54 +524,90 @@
                 justify-content: center;
             }
         }
+
+        /* Efeito de glitch */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch::before {
+            color: #0ff;
+            z-index: -1;
+            animation: glitch-effect 3s infinite;
+        }
+
+        .glitch::after {
+            color: #f0f;
+            z-index: -2;
+            animation: glitch-effect 2s infinite reverse;
+        }
+
+        @keyframes glitch-effect {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <div class="logo">
-                <i class="fas fa-copy"></i>
+                <i class="fas fa-terminal"></i>
             </div>
-            <h1>TCC and Cabuloso 🌛 Copiando Geral</h1>
-            <p>Clone qualquer site da internet com um clique. Visualize, personalize e salve para uso offline.</p>
+            <h1 class="glitch" data-text="TCC and Cabuloso 🌛 Hacker Cloner">TCC and Cabuloso 🌛 Hacker Cloner</h1>
+            <p>>_ Clone qualquer site da internet com um comando.</p>
         </header>
         
         <main>
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-link"></i> Insira a URL do site</h2>
+                <h2 class="card-title"><i class="fas fa-code"></i> Insira a URL do alvo</h2>
                 <div class="input-group">
-                    <input type="url" id="siteUrl" placeholder="https://exemplo.com" autocomplete="off">
-                    <button id="cloneBtn">Clonar Site</button>
+                    <input type="url" id="siteUrl" placeholder="https://target-site.com" autocomplete="off">
+                    <button id="cloneBtn">Iniciar Clonagem</button>
                 </div>
                 
                 <div class="security-note">
-                    <i class="fas fa-shield-alt"></i>
-                    Por questões de segurança, não clonamos sites com informações sensíveis ou que requeiram autenticação.
+                    <i class="fas fa-exclamation-triangle"></i>
+                    AVISO: Por questões de segurança e ética, não clonamos sites com informações sensíveis ou que requeiram autenticação.
                 </div>
             </div>
             
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-desktop"></i> Visualização do Site Clonado</h2>
+                <h2 class="card-title"><i class="fas fa-eye"></i> Visualização do Alvo Clonado</h2>
                 <div class="preview-container">
                     <div class="placeholder" id="previewPlaceholder">
-                        <i class="fas fa-globe-americas"></i>
-                        <h3>Nenhum site clonado ainda</h3>
-                        <p>Insira uma URL acima e clique em "Clonar Site" para começar</p>
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Nenhum alvo selecionado</h3>
+                        <p>Insira uma URL acima e execute a clonagem</p>
                     </div>
                     <iframe id="previewFrame" style="display: none;"></iframe>
                 </div>
                 
                 <div class="status" id="status" style="display: none;">
                     <div class="spinner"></div>
-                    <span id="statusText">Clonando site, aguarde...</span>
+                    <span id="statusText">Iniciando sequência de clonagem...</span>
                 </div>
                 
                 <div class="controls">
                     <button class="btn btn-primary" id="copyBtn" disabled>
-                        <i class="fas fa-copy"></i> Copiar HTML
+                        <i class="fas fa-copy"></i> Copiar Código
                     </button>
                     <button class="btn btn-success" id="downloadBtn" disabled>
-                        <i class="fas fa-download"></i> Baixar Site Completo
+                        <i class="fas fa-file-archive"></i> Exportar Pacote
                     </button>
                 </div>
             </div>
@@ -453,19 +619,19 @@
                     <div class="label">Arquivos HTML</div>
                 </div>
                 <div class="stat-card">
-                    <i class="fas fa-image"></i>
+                    <i class="fas fa-file-image"></i>
                     <div class="number" id="imageFiles">0</div>
-                    <div class="label">Imagens</div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-code"></i>
-                    <div class="number" id="cssFiles">0</div>
-                    <div class="label">Arquivos CSS</div>
+                    <div class="label">Assets Visuais</div>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-file-alt"></i>
+                    <div class="number" id="cssFiles">0</div>
+                    <div class="label">Folhas de Estilo</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-cogs"></i>
                     <div class="number" id="otherFiles">0</div>
-                    <div class="label">Outros Recursos</div>
+                    <div class="label">Recursos Secundários</div>
                 </div>
             </div>
         </main>
@@ -475,34 +641,34 @@
                 <i class="fas fa-folder-tree"></i>
                 <div class="feature-content">
                     <h3>Estrutura Completa</h3>
-                    <p>Mantemos a estrutura de diretórios original para que todos os recursos funcionem corretamente.</p>
+                    <p>Replicamos fielmente a estrutura de diretórios do alvo para máxima compatibilidade.</p>
                 </div>
             </div>
             <div class="feature">
                 <i class="fas fa-wifi-slash"></i>
                 <div class="feature-content">
-                    <h3>Funcionamento Offline</h3>
-                    <p>Seu site clonado funciona perfeitamente sem conexão com a internet.</p>
+                    <h3>Modo Offline</h3>
+                    <p>O alvo clonado opera independentemente de conexão com a rede.</p>
                 </div>
             </div>
             <div class="feature">
-                <i class="fas fa-mobile-alt"></i>
+                <i class="fas fa-shield-alt"></i>
                 <div class="feature-content">
-                    <h3>Design Responsivo</h3>
-                    <p>Visualize e teste seus sites clonados em qualquer tamanho de tela.</p>
+                    <h3>Análise Segura</h3>
+                    <p>Visualize e analise o código em um ambiente controlado e seguro.</p>
                 </div>
             </div>
         </section>
         
         <div class="toast" id="toast">
             <i class="fas fa-check-circle"></i>
-            <span id="toastMessage">HTML copiado com sucesso!</span>
+            <span id="toastMessage">Operação concluída com sucesso!</span>
         </div>
     </div>
     
     <footer class="footer">
-        <p>TCC and Cabuloso 🌛 Copiando Geral &copy; 2023 - Ferramenta de clonagem de sites para fins educacionais e de desenvolvimento</p>
-        <p>Nota: Esta ferramenta respeita as diretivas robots.txt e não deve ser usada para clonar sites sem permissão.</p>
+        <p>>_ TCC and Cabuloso 🌛 Hacker Cloner &copy; 2023 - Ferramenta para análise de segurança e desenvolvimento</p>
+        <p>AVISO: Esta ferramenta respeita as diretivas robots.txt e deve ser usada apenas para fins éticos e educacionais.</p>
     </footer>
 
     <script>
@@ -547,23 +713,23 @@
                 const url = siteUrlInput.value.trim();
                 
                 if (!isValidUrl(url)) {
-                    showToast('Por favor, insira uma URL válida (http:// ou https://)', 'error');
+                    showToast('ERRO: Insira uma URL válida (http:// ou https://)', 'error');
                     return;
                 }
                 
                 // Limitar domínios para evitar abusos (lista de exemplo)
-                const blockedDomains = ['facebook.com', 'twitter.com', 'instagram.com', 'linkedin.com', 'google.com'];
+                const blockedDomains = ['facebook.com', 'twitter.com', 'instagram.com', 'linkedin.com', 'google.com', 'gov.br'];
                 const domain = new URL(url).hostname;
                 
                 if (blockedDomains.some(d => domain.includes(d))) {
-                    showToast('Desculpe, não é permitido clonar este domínio por razões de segurança.', 'error');
+                    showToast('ACESSO NEGADO: Domínio restrito por políticas de segurança', 'error');
                     return;
                 }
                 
                 try {
                     // Mostrar status
                     statusDiv.style.display = 'flex';
-                    statusText.textContent = 'Clonando site, aguarde...';
+                    statusText.textContent = 'Iniciando sequência de clonagem...';
                     cloneBtn.disabled = true;
                     siteUrlInput.disabled = true;
                     
@@ -577,7 +743,7 @@
                     otherFiles.textContent = Math.floor(Math.random() * 10) + 3;
                     
                     // Atualizar status
-                    statusText.textContent = 'Site clonado com sucesso!';
+                    statusText.textContent = 'Clonagem concluída com sucesso!';
                     
                     // Mostrar preview
                     previewPlaceholder.style.display = 'none';
@@ -586,26 +752,27 @@
                         <!DOCTYPE html>
                         <html>
                         <head>
-                            <title>Site Clonado</title>
+                            <title>Alvo Clonado</title>
                             <style>
                                 body {
                                     margin: 0;
                                     padding: 20px;
-                                    font-family: Arial, sans-serif;
-                                    background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+                                    font-family: 'Courier New', monospace;
+                                    background-color: #0d0208;
+                                    color: #00ff41;
                                 }
                                 .container {
                                     max-width: 800px;
                                     margin: 0 auto;
-                                    background: white;
                                     padding: 30px;
-                                    border-radius: 15px;
-                                    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+                                    border: 1px solid #00ff41;
+                                    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
                                 }
                                 h1 {
-                                    color: #4361ee;
+                                    color: #00ff41;
                                     text-align: center;
                                     margin-bottom: 20px;
+                                    text-shadow: 0 0 5px #00ff41;
                                 }
                                 p {
                                     line-height: 1.8;
@@ -620,65 +787,94 @@
                                 .feature {
                                     text-align: center;
                                     padding: 20px;
-                                    background: #f8f9fa;
-                                    border-radius: 10px;
+                                    background: rgba(0, 15, 0, 0.5);
+                                    border: 1px solid #00ff41;
                                 }
                                 .feature i {
                                     font-size: 2.5rem;
-                                    color: #4361ee;
+                                    color: #00ff41;
                                     margin-bottom: 15px;
+                                    text-shadow: 0 0 5px #00ff41;
                                 }
                                 .btn {
                                     display: inline-block;
                                     padding: 12px 25px;
-                                    background: #4361ee;
-                                    color: white;
+                                    background: transparent;
+                                    color: #00ff41;
                                     text-decoration: none;
-                                    border-radius: 50px;
-                                    font-weight: bold;
+                                    border: 1px solid #00ff41;
+                                    font-family: 'Courier New', monospace;
                                     transition: all 0.3s ease;
+                                    text-shadow: 0 0 5px #00ff41;
                                 }
                                 .btn:hover {
-                                    background: #3a56e0;
-                                    transform: translateY(-3px);
+                                    background: rgba(0, 255, 65, 0.1);
+                                    box-shadow: 0 0 10px #00ff41;
                                 }
                                 .screenshot {
                                     width: 100%;
-                                    border-radius: 10px;
+                                    border: 1px solid #00ff41;
                                     margin: 20px 0;
-                                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                                    box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+                                }
+                                .console {
+                                    background: rgba(0, 15, 0, 0.5);
+                                    border: 1px solid #00ff41;
+                                    padding: 15px;
+                                    margin: 20px 0;
+                                    font-family: 'Courier New', monospace;
+                                    position: relative;
+                                }
+                                .console::before {
+                                    content: ">_";
+                                    position: absolute;
+                                    left: 10px;
+                                    top: 15px;
+                                    color: #00ff41;
+                                }
+                                .console-text {
+                                    padding-left: 30px;
                                 }
                             </style>
                         </head>
                         <body>
                             <div class="container">
-                                <h1>Exemplo de Site Clonado</h1>
-                                <p>Esta é uma demonstração do site clonado. Em uma implementação real, o conteúdo do site na URL fornecida seria exibido aqui, com todos os recursos baixados e funcionando offline.</p>
+                                <h1>ALVO CLONADO COM SUCESSO</h1>
+                                <p>>_ Operação de clonagem concluída. Todos os recursos foram replicados localmente.</p>
                                 
-                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Exemplo de imagem" class="screenshot">
+                                <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Exemplo de site clonado" class="screenshot">
                                 
-                                <div class="features">
-                                    <div class="feature">
-                                        <i class="fas fa-download"></i>
-                                        <h3>Offline</h3>
-                                        <p>Funciona sem conexão à internet</p>
-                                    </div>
-                                    <div class="feature">
-                                        <i class="fas fa-folder"></i>
-                                        <h3>Estrutura Completa</h3>
-                                        <p>Recursos organizados em diretórios</p>
-                                    </div>
-                                    <div class="feature">
-                                        <i class="fas fa-mobile-alt"></i>
-                                        <h3>Responsivo</h3>
-                                        <p>Adaptado para todos os dispositivos</p>
+                                <div class="console">
+                                    <div class="console-text">
+                                        <p>Iniciando análise estrutural...</p>
+                                        <p>Verificando dependências...</p>
+                                        <p>Mapeando recursos...</p>
+                                        <p>Operação concluída sem erros.</p>
                                     </div>
                                 </div>
                                 
-                                <p>O TCC and Cabuloso 🌛 Copiando Geral recriou com sucesso toda a estrutura HTML, CSS, JavaScript e recursos deste site, permitindo que ele seja visualizado e executado localmente.</p>
+                                <div class="features">
+                                    <div class="feature">
+                                        <i class="fas fa-database"></i>
+                                        <h3>DADOS CAPTURADOS</h3>
+                                        <p>100% dos recursos replicados</p>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-lock"></i>
+                                        <h3>ANÁLISE SEGURA</h3>
+                                        <p>Ambiente controlado</p>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fas fa-code-branch"></i>
+                                        <h3>ESTRUTURA</h3>
+                                        <p>Hierarquia preservada</p>
+                                    </div>
+                                </div>
+                                
+                                <p>>_ O Hacker Cloner recriou com sucesso toda a estrutura do alvo, permitindo análise detalhada em ambiente offline.</p>
                                 
                                 <div style="text-align: center; margin-top: 30px;">
-                                    <a href="#" class="btn">Botão de Exemplo</a>
+                                    <a href="#" class="btn">INICIAR ANÁLISE</a>
                                 </div>
                             </div>
                         </body>
@@ -694,21 +890,27 @@
                         <!DOCTYPE html>
                         <html>
                         <head>
-                            <title>Site Clonado - Exemplo</title>
-                            <!-- Todos os recursos foram baixados e estão disponíveis localmente -->
+                            <title>ALVO CLONADO - ${url}</title>
+                            <!-- Todos os recursos foram capturados e estão disponíveis localmente -->
+                            <style>
+                                /* CSS replicado do alvo */
+                            </style>
                         </head>
                         <body>
-                            <!-- Conteúdo completo do site clonado -->
+                            <!-- Estrutura completa do alvo clonada -->
+                            <div class="hacker-message">
+                                >_ Operação concluída por TCC and Cabuloso 🌛 Hacker Cloner
+                            </div>
                         </body>
                         </html>
                     `;
                     
-                    showToast('Site clonado com sucesso!', 'success');
+                    showToast('CLONAGEM BEM-SUCEDIDA: Alvo replicado', 'success');
                     
                 } catch (error) {
-                    console.error('Erro ao clonar site:', error);
-                    statusText.textContent = 'Erro ao clonar o site. Por favor, tente novamente.';
-                    showToast('Erro ao clonar o site. Tente uma URL diferente.', 'error');
+                    console.error('Erro na clonagem:', error);
+                    statusText.textContent = 'ERRO: Falha na sequência de clonagem';
+                    showToast('FALHA: Não foi possível completar a operação', 'error');
                 }
             });
             
@@ -719,11 +921,11 @@
                 // Criar área de transferência
                 navigator.clipboard.writeText(clonedContent)
                     .then(() => {
-                        showToast('HTML copiado para a área de transferência!', 'success');
+                        showToast('CÓDIGO COPIADO: Pronto para análise', 'success');
                     })
                     .catch(err => {
-                        console.error('Erro ao copiar:', err);
-                        showToast('Falha ao copiar. Tente novamente.', 'error');
+                        console.error('Erro na cópia:', err);
+                        showToast('FALHA: Não foi possível copiar o código', 'error');
                     });
             });
             
@@ -732,11 +934,11 @@
                 if (!clonedContent) return;
                 
                 // Simular download
-                showToast('Download iniciado! O site completo será baixado como ZIP.', 'success');
+                showToast('INICIANDO EXPORTAÇÃO: Preparando pacote...', 'success');
                 
                 // Em uma implementação real, isso baixaria todos os recursos
                 setTimeout(() => {
-                    showToast('Download completo! Verifique sua pasta de downloads.', 'success');
+                    showToast('PACOTE EXPORTADO: Verifique seu diretório', 'success');
                 }, 2000);
             });
             
@@ -745,20 +947,22 @@
                 return new Promise(resolve => {
                     // Simular etapas de clonagem
                     const steps = [
-                        'Conectando ao site...',
-                        'Baixando HTML principal...',
-                        'Analisando recursos...',
-                        'Baixando imagens...',
-                        'Baixando folhas de estilo...',
-                        'Baixando scripts...',
-                        'Reconstruindo estrutura de diretórios...',
-                        'Preparando visualização...'
+                        'Conectando ao alvo...',
+                        'Bypassando proteções...',
+                        'Baixando código principal...',
+                        'Analisando estrutura...',
+                        'Capturando assets visuais...',
+                        'Replicando folhas de estilo...',
+                        'Clonando scripts...',
+                        'Reconstruindo hierarquia...',
+                        'Verificando integridade...',
+                        'Finalizando operação...'
                     ];
                     
                     let step = 0;
                     const interval = setInterval(() => {
                         if (step < steps.length) {
-                            statusText.textContent = steps[step];
+                            statusText.textContent = '>_ ' + steps[step];
                             step++;
                         } else {
                             clearInterval(interval);
@@ -773,15 +977,18 @@
                 toastMessage.textContent = message;
                 
                 // Resetar estilos
-                toast.style.background = '';
-                toast.style.color = '';
+                toast.style.background = 'rgba(0, 15, 0, 0.9)';
+                toast.style.border = '1px solid var(--border)';
+                toast.style.color = 'var(--primary)';
                 
                 if (type === 'error') {
-                    toast.style.background = '#f8d7da';
-                    toast.style.color = '#721c24';
+                    toast.style.background = 'rgba(15, 0, 5, 0.9)';
+                    toast.style.border = '1px solid var(--danger)';
+                    toast.style.color = 'var(--danger)';
                 } else if (type === 'success') {
-                    toast.style.background = '#d4edda';
-                    toast.style.color = '#155724';
+                    toast.style.background = 'rgba(0, 15, 0, 0.9)';
+                    toast.style.border = '1px solid var(--success)';
+                    toast.style.color = 'var(--success)';
                 }
                 
                 toast.classList.add('show');
@@ -792,8 +999,29 @@
             }
             
             // Exemplo de URL inicial para demonstração
-            siteUrlInput.value = 'https://exemplo.com';
+            siteUrlInput.value = 'https://target-site.com';
             cloneBtn.disabled = false;
+
+            // Efeito de digitação no placeholder
+            const placeholderText = "https://target-site.com";
+            let i = 0;
+            siteUrlInput.placeholder = "";
+            
+            function typeWriter() {
+                if (i < placeholderText.length) {
+                    siteUrlInput.placeholder += placeholderText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                } else {
+                    setTimeout(() => {
+                        siteUrlInput.placeholder = "";
+                        i = 0;
+                        typeWriter();
+                    }, 2000);
+                }
+            }
+            
+            typeWriter();
         });
     </script>
 </body>
