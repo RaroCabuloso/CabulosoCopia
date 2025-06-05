@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabulosos Copiam 🕊 Hacker Cloner Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #0d0208;
+            color: #00ff41;
+            line-height: 1.6;
+            padding: 20px;
+            overflow-x: hidden;
+            margin: 0;
+            background-image: 
+                linear-gradient(rgba(0, 30, 0, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 30, 0, 0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+            background: rgba(5, 10, 5, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 50%, rgba(0, 255, 65, 0.1) 50%),
+                linear-gradient(transparent 50%, rgba(0, 255, 65, 0.1) 50%);
+            background-size: 5px 5px;
+            pointer-events: none;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            color: #00cc33;
+            margin-top: 10px;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+            border: 1px solid #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: rgba(0, 15, 0, 0.8);
+            color: #00ff41;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .input-group input::placeholder {
+            color: #009900;
+        }
+        
+        .input-group button {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #00ff41, #008f11);
+            color: #0d0208;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .input-group button:hover {
+            background: linear-gradient(135deg, #00ff41, #00cc33);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+        
+        .input-group button:active {
+            transform: translateY(2px);
+        }
+        
+        .input-group button i {
+            margin-right: 8px;
+        }
+        
+        .status {
+            margin-top: 20px;
+            display: none;
+            padding: 15px;
+            background: rgba(0, 15, 0, 0.8);
+            border: 1px solid #00ff41;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+        
+        #statusText {
+            color: #00ff41;
+            font-size: 1.1rem;
+        }
+        
+        .preview-container {
+            margin-top: 20px;
+            border: 1px solid #00ff41;
+            padding: 20px;
+            background: rgba(0, 15, 0, 0.8);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            position: relative;
+            min-height: 400px;
+        }
+        
+        .preview-container h2 {
+            color: #00ff41;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #008f11;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+        }
+        
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            background: white;
+        }
+        
+        #previewPlaceholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 500px;
+            text-align: center;
+            color: #00cc33;
+        }
+        
+        #previewPlaceholder i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+        
+        .copy-btn {
+            margin-top: 20px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #00ff41, #008f11);
+            color: #0d0208;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: none;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #00ff41, #00cc33);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(2px);
+        }
+        
+        .copy-feedback {
+            display: none;
+            color: #00ff00;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #007f00;
+            padding: 20px;
+            border-top: 1px solid #008f11;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+        }
+        
+        .terminal-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 5px;
+            background: rgba(0, 20, 0, 0.5);
+            border-left: 3px solid #00ff41;
+        }
+        
+        .terminal-prompt {
+            color: #00ff41;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background: rgba(0, 15, 0, 0.8);
+            border: 1px solid #00ff41;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: linear-gradient(90deg, #008f11, #00ff41);
+            width: 0%;
+            transition: width 0.5s;
+            position: relative;
+        }
+        
+        .progress-text {
+            position: absolute;
+            right: 10px;
+            top: 0;
+            color: #0d0208;
+            font-weight: bold;
+            line-height: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .matrix-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.1;
+        }
+        
+        @keyframes fade {
+            to { opacity: 0; }
+        }
+        
+        .matrix-char {
+            position: absolute;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            opacity: 1;
+            animation: fade 1s linear forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-effect" id="matrixEffect"></div>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-terminal"></i> ⏤͟͟͟͞𝑺𝑨𝒀𝑫𝑬𝑹 𝑪𝑨𝑩𝑼𝑳𝑶𝑺𝑶 🚩ᬊ and ⏤͟͟͞𝑹𝑨𝑹𝑶 𝑪𝑨𝑩𝑼𝑳𝑶𝑺𝑶 🚩ᬊ Hacker Cloner Pro</h1>
+            <p>>_ Clone qualquer site da internet incluindo CSS e JavaScript</p>
+        </header>
+        
+        <div class="terminal-line">
+            <span class="terminal-prompt">root@hacker:~#</span>
+            <span>clone_site --full --resources=all</span>
+        </div>
+        
+        <div class="input-group">
+            <input type="url" id="siteUrl" placeholder="https://exemplo.com" autocomplete="off" value="https://example.com">
+            <button id="cloneBtn"><i class="fas fa-download"></i> Iniciar Clonagem</button>
+        </div>
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+        </div>
+
+        <div class="status" id="status">
+            <span id="statusText">Aguardando comando de clonagem...</span>
+        </div>
+
+        <div class="preview-container">
+            <h2><i class="fas fa-eye"></i> Visualização do Alvo Clonado:</h2>
+            <iframe id="previewFrame" style="display: none;"></iframe>
+            <div id="previewPlaceholder">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Nenhum alvo selecionado</h3>
+                <p>Insira uma URL acima e execute a clonagem</p>
+            </div>
+        </div>
+
+        <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copiar Código Clonado</button>
+        <div class="copy-feedback" id="copyFeedback">Código copiado para a área de transferência!</div>
+        
+        <footer class="footer">
+            <p>>_ Cabulosos Copiam 🕊 Hacker Cloner Pro &copy; 2023</p>
+            <p>AVISO: Esta ferramenta deve ser usada apenas para fins éticos e educacionais.</p>
+            <p>Status: <span style="color:#00ff41">Sistema Operacional</span> | Recursos: <span style="color:#00ff41">100%</span></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const siteUrlInput = document.getElementById('siteUrl');
+            const cloneBtn = document.getElementById('cloneBtn');
+            const previewFrame = document.getElementById('previewFrame');
+            const previewPlaceholder = document.getElementById('previewPlaceholder');
+            const statusDiv = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            const copyBtn = document.getElementById('copyBtn');
+            const copyFeedback = document.getElementById('copyFeedback');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const matrixEffect = document.getElementById('matrixEffect');
+            
+            let clonedContent = '';
+            let resourcesToFetch = 0;
+            let resourcesFetched = 0;
+            
+            // Criar efeito Matrix
+            function createMatrixEffect() {
+                const chars = "01";
+                const columns = Math.floor(window.innerWidth / 16);
+                
+                for (let i = 0; i < columns; i++) {
+                    const delay = Math.random() * 5;
+                    setTimeout(() => {
+                        createColumn(i);
+                    }, delay * 1000);
+                }
+                
+                function createColumn(index) {
+                    const column = document.createElement('div');
+                    column.style.position = 'absolute';
+                    column.style.top = '-50px';
+                    column.style.left = index * 16 + 'px';
+                    
+                    const charCount = Math.floor(window.innerHeight / 20) + 2;
+                    for (let j = 0; j < charCount; j++) {
+                        const char = document.createElement('div');
+                        char.className = 'matrix-char';
+                        char.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+                        char.style.top = (j * 20) + 'px';
+                        char.style.animationDelay = (j * 0.1) + 's';
+                        column.appendChild(char);
+                    }
+                    
+                    matrixEffect.appendChild(column);
+                    
+                    setTimeout(() => {
+                        column.remove();
+                        createColumn(index);
+                    }, 10000);
+                }
+            }
+            
+            createMatrixEffect();
+            
+            // Função para obter URL absoluta
+            function getAbsoluteUrl(url, base) {
+                try {
+                    return new URL(url, base).href;
+                } catch (e) {
+                    console.error(`Erro ao criar URL absoluta: ${url} com base ${base}`, e);
+                    return url;
+                }
+            }
+            
+            // Função para buscar um recurso
+            async function fetchResource(url) {
+                try {
+                    const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+                    if (!response.ok) throw new Error('Falha na rede');
+                    
+                    const data = await response.json();
+                    return data.contents;
+                } catch (error) {
+                    console.error(`Erro ao buscar recurso: ${url}`, error);
+                    return null;
+                }
+            }
+            
+            // Função para atualizar o progresso
+            function updateProgress() {
+                resourcesFetched++;
+                const percent = Math.floor((resourcesFetched / resourcesToFetch) * 100);
+                progressBar.style.width = `${percent}%`;
+                progressText.textContent = `${percent}%`;
+                
+                if (resourcesFetched === resourcesToFetch) {
+                    setTimeout(() => {
+                        progressContainer.style.display = 'none';
+                    }, 500);
+                }
+            }
+            
+            // Função para incorporar recursos
+            async function embedResources(html, baseUrl) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Encontrar todos os CSS externos
+                const cssLinks = doc.querySelectorAll('link[rel="stylesheet"]');
+                resourcesToFetch += cssLinks.length;
+                
+                for (const link of cssLinks) {
+                    const href = link.getAttribute('href');
+                    if (!href) continue;
+                    
+                    const absoluteUrl = getAbsoluteUrl(href, baseUrl);
+                    statusText.textContent = `Obtendo CSS: ${absoluteUrl}`;
+                    
+                    const cssContent = await fetchResource(absoluteUrl);
+                    if (cssContent) {
+                        const style = doc.createElement('style');
+                        style.textContent = cssContent;
+                        link.replaceWith(style);
+                    } else {
+                        link.remove();
+                    }
+                    
+                    updateProgress();
+                }
+                
+                // Encontrar todos os JS externos
+                const jsScripts = doc.querySelectorAll('script[src]');
+                resourcesToFetch += jsScripts.length;
+                
+                for (const script of jsScripts) {
+                    const src = script.getAttribute('src');
+                    if (!src) continue;
+                    
+                    const absoluteUrl = getAbsoluteUrl(src, baseUrl);
+                    statusText.textContent = `Obtendo JS: ${absoluteUrl}`;
+                    
+                    const jsContent = await fetchResource(absoluteUrl);
+                    if (jsContent) {
+                        const newScript = doc.createElement('script');
+                        newScript.textContent = jsContent;
+                        script.replaceWith(newScript);
+                    } else {
+                        script.remove();
+                    }
+                    
+                    updateProgress();
+                }
+                
+                // Serializar de volta para HTML
+                const serializer = new XMLSerializer();
+                return serializer.serializeToString(doc);
+            }
+            
+            cloneBtn.addEventListener('click', async function() {
+                const url = siteUrlInput.value.trim();
+                
+                if (!url) {
+                    alert('Por favor, insira uma URL válida.');
+                    return;
+                }
+                
+                try {
+                    // Resetar estado
+                    resourcesToFetch = 0;
+                    resourcesFetched = 0;
+                    progressBar.style.width = '0%';
+                    progressText.textContent = '0%';
+                    
+                    // Exibir elementos de status
+                    statusDiv.style.display = 'block';
+                    progressContainer.style.display = 'block';
+                    statusText.textContent = 'Iniciando sequência de clonagem...';
+                    cloneBtn.disabled = true;
+                    siteUrlInput.disabled = true;
+                    copyBtn.style.display = 'none';
+                    
+                    // Obter HTML principal
+                    statusText.textContent = 'Obtendo HTML principal...';
+                    const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+                    if (!response.ok) throw new Error('Erro ao acessar a URL.');
+                    
+                    const data = await response.json();
+                    clonedContent = data.contents;
+                    resourcesFetched++;
+                    
+                    // Incorporar recursos
+                    statusText.textContent = 'Processando recursos...';
+                    clonedContent = await embedResources(clonedContent, url);
+                    
+                    // Exibir preview
+                    previewPlaceholder.style.display = 'none';
+                    previewFrame.style.display = 'block';
+                    const blob = new Blob([clonedContent], { type: 'text/html' });
+                    previewFrame.src = URL.createObjectURL(blob);
+                    
+                    statusText.textContent = 'Clonagem concluída com sucesso!';
+                    copyBtn.style.display = 'block';
+                } catch (error) {
+                    console.error('Erro na clonagem:', error);
+                    statusText.textContent = `ERRO: ${error.message || 'Falha na sequência de clonagem'}`;
+                } finally {
+                    cloneBtn.disabled = false;
+                    siteUrlInput.disabled = false;
+                }
+            });
+            
+            copyBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(clonedContent).then(() => {
+                    copyFeedback.style.display = 'block';
+                    setTimeout(() => {
+                        copyFeedback.style.display = 'none';
+                    }, 3000);
+                }).catch(err => {
+                    console.error('Erro ao copiar:', err);
+                });
+            });
+            
+            // Iniciar com exemplo
+            setTimeout(() => {
+                cloneBtn.click();
+            }, 1000);
+        });
+
+        // Desabilitar o clique direito
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        // Desabilitar seleção de texto
+        document.addEventListener("selectstart", function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
